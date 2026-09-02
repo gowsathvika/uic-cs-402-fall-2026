@@ -62,13 +62,41 @@ const std::string who_am_i() {
  * */
 template<typename T>
 void bubble_sort(vector<T> &list, bool descending) {
-    // Your code here!
-    if (!descending) {
-        for (auto a in list) {
-            printf("hi");
-        }
-    } else {
+    bool swapMade = true;
 
+    if (!descending) { // (default ascending order)
+        for (int i = 0; i < list.size() - 1; ++i) {
+            swapMade = false;
+
+            for (int j = 0; j < list.size() - 1 - i; ++j) {
+                if (list.at(j) > list.at(j+1)) {
+                    T temp = list.at(j);
+                    list.at(j) = list.at(j+1);
+                    list.at(j+1) = temp;
+                    swapMade = true;
+                }
+            }
+            if (!swapMade) {
+                return;
+            }
+        }
+
+    } else {
+        for (int i = 0; i < list.size() - 1; ++i) {
+            swapMade = false;
+
+            for (int j = 0; j < list.size() - 1 - i; ++j) {
+                if (list.at(j) < list.at(j+1)) {
+                    T temp = list.at(j);
+                    list.at(j) = list.at(j+1);
+                    list.at(j+1) = temp;
+                    swapMade = true;
+                }
+            }
+            if (!swapMade) {
+                return;
+            }
+        }
     }
 }
 
