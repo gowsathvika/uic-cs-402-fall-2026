@@ -23,8 +23,13 @@ inline unsigned int get_rand_index(unsigned int len) {
 /* You may write your own custom helper functions
  * in order to make your implementations easier.
  */
+ // helper for quick sort
+template<typename T>
+void partition(vector<T> &list, vector<T> &less, vector<T> &equal, vector<T> &greater);
 
-
+// helper for merge sort
+template<typename T>
+vector<T> merge(vector<T> &left, vector<T> &right) ;
 
 /*** END STUDENT HELPER FUNCTIONS ***/
 

@@ -63,6 +63,34 @@ void partition(vector<T> &list, vector<T> &less, vector<T> &equal, vector<T> &gr
     }
 }
 
+template<typename T> // for merge sort
+vector<T> merge(vector<T> &left, vector<T> &right) {
+    vector<T> arr;
+    int l = 0;
+    int r = 0;
+
+    while (l < left.size() && j < right.size()) {
+        if (left.at(l) <= right.at(r)) {
+            arr.push_back(left.at(l));
+            ++l;
+        } else {
+            arr.push_back(right.at(r));
+            ++r;
+        }
+    }
+
+    while (l < left.size()) {
+        arr.push_back(left.at(l));
+        ++l;
+    }
+    while (r < right.size()) {
+        arr.push_back(right.at(r));
+        ++r;
+    }
+
+    return arr;
+}
+
 
 /* Bubble Sort 
  *
@@ -257,12 +285,19 @@ void quicksort(vector<T> &list, bool descending) {
  *
  * */
 template<typename T>
-void merge_sort(vector<T> &list, bool decending) {
+void merge_sort(vector<T> &list, bool descending) {
     if (list.size() <= 1) {
         return;
     }
 
+    int mid = list.size() / 2;
+    vector<T> left(list.begin(), list.begin() + mid);
+    vector<T> right(list.begin() + mid, list.end());
 
+    merge_sort(left, false);
+    merge_sort(right, false);
+
+    list = merge(left, right);
 
     if (descending) {
         reverse(list.begin(), list.end());
@@ -292,8 +327,20 @@ void my_hybrid_sort(vector<T> &list, bool descending) {
         return;
     }
 
+    if (list.size() <= 128) {
+        insertion_sort(list, false);
+    } else {
+        int mid = list.size() / 2;
+        vector<T> left(list.begin(), list.begin() + mid);
+        vector<T> right(list.begin() + mid, list.end());
 
-    
+        hybrid_sort(left, false);
+        hybrid_sort(right, false);
+
+        list = merge(left, right);
+    }
+
+
     if (descending) {
         reverse(list.begin(), list.end());
     }
@@ -394,10 +441,6 @@ void radix_sort(vector<T> &list, unsigned int base, bool descending) {
         reverse(list.begin(), list.end());
     }
 }
-
-
-
-
 
 
 int main() {
