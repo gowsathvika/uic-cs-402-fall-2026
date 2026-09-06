@@ -65,41 +65,26 @@ void bubble_sort(vector<T> &list, bool descending) {
     if (list.size() <= 1) {
         return;
     }
-
     bool swapMade = true;
-    if (!descending) {
-        for (int i = 0; i < list.size() - 1; ++i) {
-            swapMade = false;
 
-            for (int j = 0; j < list.size() - 1 - i; ++j) {
-                if (list.at(j) > list.at(j+1)) {
-                    T temp = list.at(j);
-                    list.at(j) = list.at(j+1);
-                    list.at(j+1) = temp;
-                    swapMade = true;
-                }
-            }
-            if (!swapMade) {
-                return;
+    for (int i = 0; i < list.size() - 1; ++i) {
+        swapMade = false;
+
+        for (int j = 0; j < list.size() - 1 - i; ++j) {
+            if (list.at(j) > list.at(j+1)) {
+                T temp = list.at(j);
+                list.at(j) = list.at(j+1);
+                list.at(j+1) = temp;
+                swapMade = true;
             }
         }
-
-    } else {
-        for (int i = 0; i < list.size() - 1; ++i) {
-            swapMade = false;
-
-            for (int j = 0; j < list.size() - 1 - i; ++j) {
-                if (list.at(j) < list.at(j+1)) {
-                    T temp = list.at(j);
-                    list.at(j) = list.at(j+1);
-                    list.at(j+1) = temp;
-                    swapMade = true;
-                }
-            }
-            if (!swapMade) {
-                return;
-            }
+        if (!swapMade) {
+            return;
         }
+    }
+
+    if (descending) {
+        reverse(list.begin(), list.end());
     }
 }
 
@@ -125,35 +110,22 @@ void selection_sort(vector<T> &list, bool descending) {
     if (list.size <= 1) {
         return;
     }
-
-    if (!descending) {
-        int min_index = 0;
-        
-        for (int i = 0; i < list.size() - 1; ++i) {
-            for (int j = i + 1; j < list.size(); ++j) {
-                if (list.at(j) < list.at(min_index)) {
-                    min_index = j;
-                }
+    int min_index = 0;
+    
+    for (int i = 0; i < list.size() - 1; ++i) {
+        for (int j = i + 1; j < list.size(); ++j) {
+            if (list.at(j) < list.at(min_index)) {
+                min_index = j;
             }
-
-            T temp = list.at(i);
-            list.at(i) = list.at(min_index);
-            list.at(min_index) = temp;
         }
-    } else {
-        int max_index = 0;
-        
-        for (int i = 0; i < list.size() - 1; ++i) {
-            for (int j = i + 1; j < list.size(); ++j) {
-                if (list.at(j) > list.at(max_index)) {
-                    max_index = j;
-                }
-            }
 
-            T temp = list.at(i);
-            list.at(i) = list.at(max_index);
-            list.at(max_index) = temp;
-        }
+        T temp = list.at(i);
+        list.at(i) = list.at(min_index);
+        list.at(min_index) = temp;
+    }
+
+    if (descending) {
+        reverse(list.begin(), list.end());
     }
 }
 
@@ -181,29 +153,20 @@ void insertion_sort(vector<T> &list, bool descending) {
     if (list.size <= 1) {
         return;
     }
-    
-    if (!descending) {
-        for (int i = 1; i < list.size(); ++i) {
-            int j = i - 1;
-            T temp = list.at(i);
-            
-            while (j >= 0 && list.at(i) < list.at(j)) {
-                list.at(j+1) = list.at(j);
-                --j;
-            }
-            list.at(j+1) = temp;
+
+    for (int i = 1; i < list.size(); ++i) {
+        int j = i - 1;
+        T temp = list.at(i);
+        
+        while (j >= 0 && list.at(i) < list.at(j)) {
+            list.at(j+1) = list.at(j);
+            --j;
         }
-    } else {
-        for (int i = 1; i < list.size(); ++i) {
-            int j = i - 1;
-            T temp = list.at(i);
-            
-            while (j >= 0 && list.at(i) > list.at(j)) {
-                list.at(j+1) = list.at(j);
-                --j;
-            }
-            list.at(j+1) = temp;
-        }
+        list.at(j+1) = temp;
+    }
+
+    if (descending) {
+        reverse(list.begin(), list.end());
     }
 }
 
@@ -232,10 +195,10 @@ void quicksort(vector<T> &list, bool descending) {
     if (list.size() <= 1) {
         return;
     }
-    if (!descending) {
 
-    } else {
 
+    if (descending) {
+        reverse(list.begin(), list.end());
     }
 }
 
@@ -263,10 +226,8 @@ void merge_sort(vector<T> &list, bool decending) {
         return;
     }
 
-    if (!descending) {
-
-    } else {
-        
+    if (descending) {
+        reverse(list.begin(), list.end());
     }
 }
 
@@ -289,7 +250,13 @@ void merge_sort(vector<T> &list, bool decending) {
  */
 template<typename T>
 void my_hybrid_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+
+    if (descending) {
+        reverse(list.begin(), list.end());
+    }
 }
 
 
@@ -345,8 +312,47 @@ void binary_radix_sort(vector<T> &list, bool descending) {
  */
 template<Integral T>
 void radix_sort(vector<T> &list, unsigned int base, bool descending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
 
+    T max = list.at(0);
+    for (int i = 1; i < list.size(); ++i) {
+        if (list.at(i) > max) {
+            max = list.at(i);
+        }
+    }
+
+    int digits = 0;
+    while (max > 0) {
+        max /= base;
+        ++digits;
+    }
+
+
+    T exp = 1;
+    for (int i = 0; i < digits; ++i) {
+        vector<vector<T>> A(base);
+
+        for (int j = 0; j < list.size(); ++j) {
+            T l = list.at(j);
+            int l_digit = (l / exp) % base; 
+            A.at(l_digit).push_back(l);
+        }
+        list.clear();
+
+        for (int j = 0; j < A.size(); ++j) {
+            for (int h = 0; h < (A.at(j)).size(); ++h) {
+                list.push_back((A.at(j)).at(h));
+            }
+        }
+        
+        exp *= base;
+    }
+
+    if (descending) {
+        reverse(list.begin(), list.end());
+    }
 }
 
 
@@ -377,92 +383,92 @@ int main() {
      *     autograder will throw an error if you run it without uncommenting the code.
      */
 
-    //vector<int> test_list {1, 2, 3, 4, 5};
-    //vector<unsigned int> test_list2 {1, 2, 3, 4, 5};
-    //vector<StableChar> test_list3  {};
-    //vector<StableInt> test_list4 {};
-    //vector<StableString> test_list5 {};
-    //vector<short> test_list6  {};
-    //vector<unsigned short> test_list7  {};
-    //vector<long> test_list8  {};
-    //vector<unsigned long> test_list9  {};
+    vector<int> test_list {1, 2, 3, 4, 5};
+    vector<unsigned int> test_list2 {1, 2, 3, 4, 5};
+    vector<StableChar> test_list3  {};
+    vector<StableInt> test_list4 {};
+    vector<StableString> test_list5 {};
+    vector<short> test_list6  {};
+    vector<unsigned short> test_list7  {};
+    vector<long> test_list8  {};
+    vector<unsigned long> test_list9  {};
 
 
-    //insertion_sort(test_list);
-    //insertion_sort(test_list2);
-    //insertion_sort(test_list3);
-    //insertion_sort(test_list4);
-    //insertion_sort(test_list5);
-    //insertion_sort(test_list6);
-    //insertion_sort(test_list7);
-    //insertion_sort(test_list8);
-    //insertion_sort(test_list9);
+    insertion_sort(test_list);
+    insertion_sort(test_list2);
+    insertion_sort(test_list3);
+    insertion_sort(test_list4);
+    insertion_sort(test_list5);
+    insertion_sort(test_list6);
+    insertion_sort(test_list7);
+    insertion_sort(test_list8);
+    insertion_sort(test_list9);
 
 
-    //selection_sort(test_list);
-    //selection_sort(test_list2);
-    //selection_sort(test_list3);
-    //selection_sort(test_list4);
-    //selection_sort(test_list5);
-    //selection_sort(test_list6);
-    //selection_sort(test_list7);
-    //selection_sort(test_list8);
-    //selection_sort(test_list9);
+    selection_sort(test_list);
+    selection_sort(test_list2);
+    selection_sort(test_list3);
+    selection_sort(test_list4);
+    selection_sort(test_list5);
+    selection_sort(test_list6);
+    selection_sort(test_list7);
+    selection_sort(test_list8);
+    selection_sort(test_list9);
 
-    //bubble_sort(test_list);
-    //bubble_sort(test_list2);
-    //bubble_sort(test_list3);
-    //bubble_sort(test_list4);
-    //bubble_sort(test_list5);
-    //bubble_sort(test_list6);
-    //bubble_sort(test_list7);
-    //bubble_sort(test_list8);
-    //bubble_sort(test_list9);
+    bubble_sort(test_list);
+    bubble_sort(test_list2);
+    bubble_sort(test_list3);
+    bubble_sort(test_list4);
+    bubble_sort(test_list5);
+    bubble_sort(test_list6);
+    bubble_sort(test_list7);
+    bubble_sort(test_list8);
+    bubble_sort(test_list9);
 
 
-    //merge_sort(test_list);
-    //merge_sort(test_list2);
-    //merge_sort(test_list3);
-    //merge_sort(test_list4);
-    //merge_sort(test_list5);
-    //merge_sort(test_list6);
-    //merge_sort(test_list7);
-    //merge_sort(test_list8);
-    //merge_sort(test_list9);
+    merge_sort(test_list);
+    merge_sort(test_list2);
+    merge_sort(test_list3);
+    merge_sort(test_list4);
+    merge_sort(test_list5);
+    merge_sort(test_list6);
+    merge_sort(test_list7);
+    merge_sort(test_list8);
+    merge_sort(test_list9);
 
-    //quicksort(test_list);
-    //quicksort(test_list2);
-    //quicksort(test_list3);
-    //quicksort(test_list4);
-    //quicksort(test_list5);
-    //quicksort(test_list6);
-    //quicksort(test_list7);
-    //quicksort(test_list8);
-    //quicksort(test_list9);
+    quicksort(test_list);
+    quicksort(test_list2);
+    quicksort(test_list3);
+    quicksort(test_list4);
+    quicksort(test_list5);
+    quicksort(test_list6);
+    quicksort(test_list7);
+    quicksort(test_list8);
+    quicksort(test_list9);
 
-    //my_hybrid_sort(test_list);
-    //my_hybrid_sort(test_list2);
-    //my_hybrid_sort(test_list3);
-    //my_hybrid_sort(test_list4);
-    //my_hybrid_sort(test_list5);
-    //my_hybrid_sort(test_list6);
-    //my_hybrid_sort(test_list7);
-    //my_hybrid_sort(test_list8);
-    //my_hybrid_sort(test_list9);
+    my_hybrid_sort(test_list);
+    my_hybrid_sort(test_list2);
+    my_hybrid_sort(test_list3);
+    my_hybrid_sort(test_list4);
+    my_hybrid_sort(test_list5);
+    my_hybrid_sort(test_list6);
+    my_hybrid_sort(test_list7);
+    my_hybrid_sort(test_list8);
+    my_hybrid_sort(test_list9);
 
-    //binary_radix_sort(test_list);
-    //binary_radix_sort(test_list2);
-    //binary_radix_sort(test_list6);
-    //binary_radix_sort(test_list7);
-    //binary_radix_sort(test_list8);
-    //binary_radix_sort(test_list9);
+    binary_radix_sort(test_list);
+    binary_radix_sort(test_list2);
+    binary_radix_sort(test_list6);
+    binary_radix_sort(test_list7);
+    binary_radix_sort(test_list8);
+    binary_radix_sort(test_list9);
 
-    //radix_sort(test_list);
-    //radix_sort(test_list2);
-    //radix_sort(test_list6);
-    //radix_sort(test_list7);
-    //radix_sort(test_list8);
-    //radix_sort(test_list9);
+    radix_sort(test_list);
+    radix_sort(test_list2);
+    radix_sort(test_list6);
+    radix_sort(test_list7);
+    radix_sort(test_list8);
+    radix_sort(test_list9);
 
 
     return 0;
