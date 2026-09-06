@@ -45,6 +45,24 @@ const std::string who_am_i() {
 // Please list ALL of your other group members as comments below.
 // Individual
 
+// helper functions
+
+template<typename T> // for quick sort
+void partition(vector<T> &list, vector<T> &less, vector<T> &equal, vector<T> &greater) {
+    T pivot = list.at(rand() % list.size());
+
+    for (int i = 0; i < list.size(); ++i) {
+        T curr = list.at(i);
+        if (curr < pivot) {
+            less.push_back(curr);
+        } else if (val > pivot) {
+            greater.push_back(curr);
+        } else {
+            equal.push_back(curr);
+        }
+    }
+}
+
 
 /* Bubble Sort 
  *
@@ -195,7 +213,25 @@ void quicksort(vector<T> &list, bool descending) {
     if (list.size() <= 1) {
         return;
     }
+    vector<T> less;
+    vector<T> greater;
+    vector<T> equal;
 
+    partition(list, less, equal, greater);
+
+    quicksort(less, false);
+    quicksort(greater, false);
+
+    list.clear();
+    for (int i = 0; i < less.size(); ++i) {
+        list.push_back(less.at(i));
+    }
+    for (int i = 0; i < equal.size(); ++i) {
+        list.push_back(equal.at(i));
+    }
+    for (int i = 0; i < greater.size(); ++i) {
+        list.push_back(greater.at(i));
+    }
 
     if (descending) {
         reverse(list.begin(), list.end());
@@ -226,6 +262,8 @@ void merge_sort(vector<T> &list, bool decending) {
         return;
     }
 
+
+
     if (descending) {
         reverse(list.begin(), list.end());
     }
@@ -254,6 +292,8 @@ void my_hybrid_sort(vector<T> &list, bool descending) {
         return;
     }
 
+
+    
     if (descending) {
         reverse(list.begin(), list.end());
     }
