@@ -62,9 +62,12 @@ const std::string who_am_i() {
  * */
 template<typename T>
 void bubble_sort(vector<T> &list, bool descending) {
-    bool swapMade = true;
+    if (list.size() <= 1) {
+        return;
+    }
 
-    if (!descending) { // (default ascending order)
+    bool swapMade = true;
+    if (!descending) {
         for (int i = 0; i < list.size() - 1; ++i) {
             swapMade = false;
 
@@ -101,18 +104,6 @@ void bubble_sort(vector<T> &list, bool descending) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* Selection Sort 
  *
  * 5 points
@@ -131,21 +122,40 @@ void bubble_sort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void selection_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size <= 1) {
+        return;
+    }
+
+    if (!descending) {
+        int min_index = 0;
+        
+        for (int i = 0; i < list.size() - 1; ++i) {
+            for (int j = i + 1; j < list.size(); ++j) {
+                if (list.at(j) < list.at(min_index)) {
+                    min_index = j;
+                }
+            }
+
+            T temp = list.at(i);
+            list.at(i) = list.at(min_index);
+            list.at(min_index) = temp;
+        }
+    } else {
+        int max_index = 0;
+        
+        for (int i = 0; i < list.size() - 1; ++i) {
+            for (int j = i + 1; j < list.size(); ++j) {
+                if (list.at(j) > list.at(max_index)) {
+                    max_index = j;
+                }
+            }
+
+            T temp = list.at(i);
+            list.at(i) = list.at(max_index);
+            list.at(max_index) = temp;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Insertion Sort 
@@ -168,13 +178,34 @@ void selection_sort(vector<T> &list, bool descending) {
 //void insertion_sort(vector<T> &list, bool descending = false);
 template<typename T>
 void insertion_sort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size <= 1) {
+        return;
+    }
+    
+    if (!descending) {
+        for (int i = 1; i < list.size(); ++i) {
+            int j = i - 1;
+            T temp = list.at(i);
+            
+            while (j >= 0 && list.at(i) < list.at(j)) {
+                list.at(j+1) = list.at(j);
+                --j;
+            }
+            list.at(j+1) = temp;
+        }
+    } else {
+        for (int i = 1; i < list.size(); ++i) {
+            int j = i - 1;
+            T temp = list.at(i);
+            
+            while (j >= 0 && list.at(i) > list.at(j)) {
+                list.at(j+1) = list.at(j);
+                --j;
+            }
+            list.at(j+1) = temp;
+        }
+    }
 }
-
-
-
-
-
 
 
 /* Quicksort 
@@ -198,14 +229,15 @@ void insertion_sort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void quicksort(vector<T> &list, bool descending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+    if (!descending) {
+
+    } else {
+
+    }
 }
-
-
-
-
-
-
 
 
 /* Merge Sort 
@@ -227,21 +259,16 @@ void quicksort(vector<T> &list, bool descending) {
  * */
 template<typename T>
 void merge_sort(vector<T> &list, bool decending) {
-    // Your code here!
+    if (list.size() <= 1) {
+        return;
+    }
+
+    if (!descending) {
+
+    } else {
+        
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Your Hybrid Sort
@@ -319,6 +346,7 @@ void binary_radix_sort(vector<T> &list, bool descending) {
 template<Integral T>
 void radix_sort(vector<T> &list, unsigned int base, bool descending) {
     // Your code here!
+
 }
 
 
@@ -335,6 +363,12 @@ int main() {
 
     /***** DO NOT MODIFY BELOW THIS LINE *****/
     /*** INSTRUCTIONS ***
+
+
+
+
+int main() {
+    /**** STUDENT CODE HERE ****/ 
      *
      * Before submitting your code: 
      *   - remove all code within the main function that you have written above the `do-not-modify` line;
